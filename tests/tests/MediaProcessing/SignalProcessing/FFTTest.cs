@@ -1,6 +1,3 @@
-
-// Tests For Fast Fourier Transform
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +8,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using SharpPlayer.MediaProcessing.SignalProcessing;
 
-
+// Tests For Fast Fourier Transform
 namespace SharpPlayerTests {
 
     [TestClass]
@@ -28,12 +25,12 @@ namespace SharpPlayerTests {
         /* Test FFT with single point, should return the same point */
         [TestMethod]
         public void FFT1() {
-            
+
             Random randNum = new Random();
-            Complex[] points = 
+            Complex[] points =
                 Enumerable.Repeat(0, 20)
-                          .Select(i => new Complex(randNum.NextDouble() * (10 ^ 6), 
-                                                    randNum.NextDouble() * (10 ^ 6)))
+                          .Select(i => new Complex(randNum.NextDouble() * (10 ^ 6),
+                                                     randNum.NextDouble() * (10 ^ 6)))
                           .ToArray();
 
             var singlePoint = new Complex[1];
@@ -45,14 +42,14 @@ namespace SharpPlayerTests {
 
 
         /* From Manual Calculation, FFT for N = 2 of points {x0, x1}
-         * should result in {x0 + x1, x0 - x1} */ 
+         * should result in {x0 + x1, x0 - x1} */
         [TestMethod]
         public void FFT2() {
-            double[] realPoints = {1, 2.34, 78.94, 432987746, 3.14159, -32,      -99932, 1,     0,   0};
-            double[] imgPoints =  {0, 0,    0,     323,      -32,      43.32234, 3.163, 832, -0.003, 0};
+            double[] realPoints = { 1, 2.34, 78.94, 432987746, 3.14159, -32, -99932, 1, 0, 0 };
+            double[] imgPoints = { 0, 0, 0, 323, -32, 43.32234, 3.163, 832, -0.003, 0 };
 
-            var fValues = new Complex[realPoints.Length/2][];
-            var fResult = new Complex[realPoints.Length/2][];
+            var fValues = new Complex[realPoints.Length / 2][];
+            var fResult = new Complex[realPoints.Length / 2][];
 
             for (int i = 0; i < fValues.GetLength(0); i++) {
                 fValues[i] = new Complex[2];
@@ -77,15 +74,15 @@ namespace SharpPlayerTests {
                 values[i - 1] = new Complex(i, 0);
             }
 
-            double[] expectedReal ={ 10, -2, -2, -2, -2 };
-            double[] expectedImg = {0, 2, 0, -2};
+            double[] expectedReal = { 10, -2, -2, -2, -2 };
+            double[] expectedImg = { 0, 2, 0, -2 };
 
             var result = FFT.PerformFFT(values);
             for (int i = 0; i < result.Length; i++) {
                 Assert.AreEqual(expectedReal[i], result[i].Real, delta: Math.Pow(10, -5));
                 Assert.AreEqual(expectedImg[i], result[i].Imaginary, delta: Math.Pow(10, -5));
             }
-      
+
         }
 
 
@@ -97,7 +94,7 @@ namespace SharpPlayerTests {
                 values[i] = new Complex(i, 0);
             }
 
-            double[] expectedReal =  
+            double[] expectedReal =
                 Enumerable.Repeat(28.0, 1)
                           .Concat(Enumerable.Repeat(-4.0, values.Length - 1))
                           .ToArray();
