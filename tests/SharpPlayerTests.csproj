@@ -51,6 +51,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="tests\MediaProcessing\Codec\WAV\WavTests.cs" />
     <Compile Include="tests\MediaProcessing\SignalProcessing\FFTTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
