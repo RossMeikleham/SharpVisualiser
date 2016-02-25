@@ -51,14 +51,14 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="tests\MediaProcessing\Codec\WAV\WavTests.cs" />
-    <Compile Include="tests\MediaProcessing\SignalProcessing\FFTTest.cs" />
+    <Compile Include="src\MediaProcessing\Codec\WAV\WavTests.cs" />
+    <Compile Include="src\MediaProcessing\SignalProcessing\FFTTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SharpPlayer.csproj">
+    <ProjectReference Include="..\..\src\SharpPlayer.Core\SharpPlayer.Core.csproj">
       <Project>{a4739aff-60a7-4ed9-bb4d-e18cdffc290e}</Project>
-      <Name>SharpPlayer</Name>
+      <Name>SharpPlayer.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

@@ -1,29 +1,12 @@
 using System;
 using System.Numerics;
+using System.Diagnostics;
 
 // Fast Fourier Transform Implementation
 namespace SharpPlayer.MediaProcessing.SignalProcessing {
 
 
     public class FFT {
-
-        /* Performs a Bit Reversal Algorithm on a postive integer 
-         * for given number of bits
-         * e.g. 011 with 3 bits is reversed to 110 */
-        private static int BitReverse(int n, int bits) {
-            int reversedN = n;
-            int count = bits - 1;
-
-            n >>= 1;
-            while (n > 0) {
-                reversedN = (reversedN << 1) | (n & 1);
-                count--;
-                n >>= 1;
-            }
-
-            return ((reversedN << count) & ((1 << bits) - 1));
-        }
-
 
         /* Uses Cooley–Tukey algorithm with radix-2 DIT case
          * assumes no of points are a power of 2 */
@@ -76,5 +59,33 @@ namespace SharpPlayer.MediaProcessing.SignalProcessing {
             return result;
         }
 
+        /* Performs a Bit Reversal Algorithm on a postive integer 
+         * for given number of bits
+         * e.g. 011 with 3 bits is reversed to 110 */
+        private static int BitReverse(int n, int bits) {
+            int reversedN = n;
+            int count = bits - 1;
+
+            n >>= 1;
+            while (n > 0) {
+                reversedN = (reversedN << 1) | (n & 1);
+                count--;
+                n >>= 1;
+            }
+
+            return ((reversedN << count) & ((1 << bits) - 1));
+        }
+
+        
+        public static double[] Normalize(Complex[] data) {
+            var result = new double[data.Length];
+
+            for (int i = 0; i < data.Length; i++) {
+                result[i] = Complex.Abs(data[i]) / data.Length;
+            }
+
+            return result; 
+       }
     }
+
 }

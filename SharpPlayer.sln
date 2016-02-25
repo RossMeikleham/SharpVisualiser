@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpPlayer", "SharpPlayer.csproj", "{A4739AFF-60A7-4ED9-BB4D-E18CDFFC290E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpPlayer.Core", "src\SharpPlayer.Core\SharpPlayer.Core.csproj", "{A4739AFF-60A7-4ED9-BB4D-E18CDFFC290E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpPlayerTests", "tests\SharpPlayerTests.csproj", "{4E911C32-D9E1-48CB-AEE7-9EF166F7CC84}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpPlayerTests.Core", "tests\SharpPlayerTests.Core\SharpPlayerTests.Core.csproj", "{4E911C32-D9E1-48CB-AEE7-9EF166F7CC84}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

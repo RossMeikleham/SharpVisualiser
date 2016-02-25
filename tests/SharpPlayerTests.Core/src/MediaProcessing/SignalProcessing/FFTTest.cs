@@ -68,7 +68,7 @@ namespace SharpPlayerTests {
 
         /* Test FFT with 4 Real points */
         [TestMethod]
-        public void realFFT4() {
+        public void RealFFT4() {
             var values = new Complex[4];
             for (int i = 1; i < values.Length + 1; i++) {
                 values[i - 1] = new Complex(i, 0);
@@ -88,7 +88,7 @@ namespace SharpPlayerTests {
 
         /* Test FFT with 8 Real points */
         [TestMethod]
-        public void realFFT8() {
+        public void RealFFT8() {
             var values = new Complex[8];
             for (int i = 0; i < values.Length; i++) {
                 values[i] = new Complex(i, 0);
@@ -109,6 +109,30 @@ namespace SharpPlayerTests {
 
         }
 
+        /* Test FFT with a fair amount of points */
+        [TestMethod]
+        public void FFTMedium() {
+            Complex[] values = Enumerable.Repeat(0, 8192).Select(i => new Complex(0, 0)).ToArray();
+            var result = FFT.PerformFFT(values);
+            var expected = new Complex(0, 0);
+
+            for (int i = 0; i < values.Length; i++) {
+                Assert.AreEqual(expected, result[i]);
+            }
+        }
+
+
+        [TestMethod]
+        public void Normalize1() {
+            var value = new Complex(3, 4);
+            var arr = new Complex[] { value };
+
+            var result = FFT.Normalize(FFT.PerformFFT(arr));
+            Assert.AreEqual(5, result[0]);
+        }
+
+      
+        
 
     }
 }
