@@ -6,11 +6,12 @@ using System.Numerics;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-using SharpPlayer.MediaProcessing.Codec;
+using SharpPlayer.MediaProcessing.Codecs;
 using SharpPlayer.MediaProcessing.SignalProcessing;
 
 using System.Diagnostics;
 using System.IO;
+using SharpPlayer.MediaProcessing;
 
 
 // Test Wav Data 
@@ -35,11 +36,9 @@ namespace WavTests {
 
             Assert.AreEqual(wav.ChunkSize, 2084u);
 
-            Assert.AreEqual(NumChannels.Stereo, wav.FMTChunk.NChannels);
-            Assert.AreEqual(22050u, wav.FMTChunk.SampleRate);
-            Assert.AreEqual(88200u, wav.FMTChunk.ByteRate);
-            Assert.AreEqual(4u, wav.FMTChunk.BlockAlign);
-            Assert.AreEqual(16u, wav.FMTChunk.BitsPerSample);
+            Assert.AreEqual(NumChannels.Stereo, wav.NChannels);
+            Assert.AreEqual(22050u, wav.SampleRate);
+
 
             short[] expectedSamples;
 
@@ -64,11 +63,8 @@ namespace WavTests {
             string wavFilePath = exampleDir + "8k16bitpcm.wav";
             Wav wav = new Wav(File.ReadAllBytes(wavFilePath).ToList());
 
-            Debug.WriteLine("Channels:{0}", wav.FMTChunk.NChannels);
-            Debug.WriteLine("SampleRate:{0}Hz", wav.FMTChunk.SampleRate);
-            Debug.WriteLine("ByteRate:{0}", wav.FMTChunk.ByteRate);
-            Debug.WriteLine("BlockAlign:{0}", wav.FMTChunk.BlockAlign);
-            Debug.WriteLine("BitsPerSample:{0}", wav.FMTChunk.BitsPerSample);
+            Debug.WriteLine("Channels:{0}", wav.NChannels);
+            Debug.WriteLine("SampleRate:{0}Hz", wav.SampleRate);
             Debug.WriteLine("LengthSamples{0}", wav.SampleData.Count());
 
             int bufferSize = 8192;

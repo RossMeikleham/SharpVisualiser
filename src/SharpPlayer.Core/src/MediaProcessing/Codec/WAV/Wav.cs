@@ -8,28 +8,30 @@ using System.IO;
 
 
 using SharpPlayer.MediaProcessing.SignalProcessing;
+using SharpPlayer.MediaProcessing;
 
 // dealing with PCM WAV data
-namespace SharpPlayer.MediaProcessing.Codec {
-
-    public enum NumChannels { Mono = 1, Stereo = 2 };
+namespace SharpPlayer.MediaProcessing.Codecs {
 
 
-    public class Wav {
+    public class Wav : Codec {
+
+        public NumChannels NChannels { get; }
+        public uint SampleRate { get; }
+        public List<short> SampleData { get; }
 
         public const int RiffChunkSize = 12; // Size of Riff Chunk In Bytes
-        
-        public readonly FormatChunk FMTChunk;
-        public readonly List<short> SampleData; //Raw Wav Data
         public readonly uint ChunkSize;
 
-   
         public Wav(List<byte> data) {
             ChunkSize = ReadRiffChunk(data);
             data.RemoveRange(0, RiffChunkSize);
 
-            FMTChunk = new FormatChunk(data);
+            var FMTChunk = new FormatChunk(data);
+            NChannels = FMTChunk.NChannels;
+            SampleRate = FMTChunk.SampleRate;
             data.RemoveRange(0, FormatChunk.FormatChunkSize);
+      
 
             SampleData = ReadDataChunk(data);
         }

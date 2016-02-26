@@ -38,6 +38,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="src\MediaProcessing\Codec\Codec.cs" />
     <Compile Include="src\MediaProcessing\Codec\WAV\Wav.cs" />
     <Compile Include="src\MediaProcessing\SignalProcessing\FFT.cs" />
   </ItemGroup>
