@@ -56,9 +56,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\SharpPlayer.Core\SharpPlayer.Core.csproj">
+    <ProjectReference Include="..\..\src\SharpVisualiser.Core\SharpVisualiser.Core.csproj">
       <Project>{a4739aff-60a7-4ed9-bb4d-e18cdffc290e}</Project>
-      <Name>SharpPlayer.Core</Name>
+      <Name>SharpVisualiser.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

@@ -152,9 +152,9 @@ namespace SharpPlayer.UI {
                     avg += Data[i + j];
                 }
                 avg /= groupN;
-              
+
                 // Draw The Bar
-                Brush color = Brushes.Aquamarine;
+                Brush color = Brushes.Aqua;
                 double barHeight = (20 * Math.Log10(avg) * height) / maxMagnitude;
                 if (barHeight < 1.0) {
                     barHeight = 1.0;

@@ -79,9 +79,9 @@
     <None Include="src\App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SharpPlayer.Core\SharpPlayer.Core.csproj">
+    <ProjectReference Include="..\SharpVisualiser.Core\SharpVisualiser.Core.csproj">
       <Project>{a4739aff-60a7-4ed9-bb4d-e18cdffc290e}</Project>
-      <Name>SharpPlayer.Core</Name>
+      <Name>SharpVisualiser.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

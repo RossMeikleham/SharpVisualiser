@@ -53,7 +53,7 @@ namespace SharpPlayer.MediaProcessing {
          * tells us to stop */ 
         private void Playing(ProcessFrequencies process, long totalSamplesProcessed) {
             
-            long currentSamplesProcessed = 0; // Keep track of what samples we've processed so far
+            long currentSamplesProcessed = 0; // Keep track of what samples currently need to be processed
             Stopwatch stopWatch = new Stopwatch();
             bool isMono = NChannels == NumChannels.Mono;
             int processLength = isMono ? BufferSize : BufferSize * 2; //Need to process Left + Right channels for Stereo
@@ -81,7 +81,7 @@ namespace SharpPlayer.MediaProcessing {
                 currentSamplesProcessed += nextSamplesProcessed;
 
                 // Time Elapsed enough to process an entire buffer
-                if (currentSamplesProcessed >= processLength) {
+                if (totalSamplesProcessed + processLength < SampleData.Count()) {
                     double[] buffer;
                     if (isMono) {
                         buffer =
@@ -128,6 +128,7 @@ namespace SharpPlayer.MediaProcessing {
                         for (int i = toTake; i < BufferSize; i++) {
                             fftBuff[i] = 0;
                         }
+                        Debug.WriteLine(fftBuff.Length);
                         buffer = FFT.Magnitude(FFT.PerformFFT(fftBuff));
                     }
 
