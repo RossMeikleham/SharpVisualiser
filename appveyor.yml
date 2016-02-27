@@ -1,0 +1,19 @@
+version: '{branch}-{build}'
+
+environment:
+
+    matrix:
+        - platform: x64
+        - CONFIG: "Debug"
+
+        - platform: x64
+        - CONFIG: "Release"
+
+build_script:
+    - MSBuild SharpVisualiser.sln /p:Configuration=%CONFIG% /p:Platform="Any CPU"
+
+test:
+    - cd tests/SharpVisualiserTests.Core/bin/%CONFIG%
+    - VTest.Console /logger:Appveyor SharpVisualiserTests.dll
+
+
