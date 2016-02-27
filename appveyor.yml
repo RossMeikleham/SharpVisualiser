@@ -4,10 +4,10 @@ environment:
 
     matrix:
         - platform: x64
-        - CONFIG: "Debug"
+          CONFIG: "Debug"
 
         - platform: x64
-        - CONFIG: "Release"
+          CONFIG: "Release"
 
 build_script:
     - MSBuild SharpVisualiser.sln /p:Configuration=%CONFIG% /p:Platform="Any CPU"
