@@ -7,11 +7,11 @@ using System.Diagnostics;
 using System.IO;
 
 
-using SharpPlayer.MediaProcessing.SignalProcessing;
-using SharpPlayer.MediaProcessing;
+using SharpVisualiser.MediaProcessing.SignalProcessing;
+using SharpVisualiser.MediaProcessing;
 
 // dealing with PCM WAV data
-namespace SharpPlayer.MediaProcessing.Codecs {
+namespace SharpVisualiser.MediaProcessing.Codecs {
 
 
     public class Wav : Codec {

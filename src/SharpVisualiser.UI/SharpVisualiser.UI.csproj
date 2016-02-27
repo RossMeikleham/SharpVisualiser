@@ -7,8 +7,8 @@
     <ProjectGuid>{93722D0E-02C3-4B3F-9619-0E8FFA6AB5C9}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SharpPlayer.UI</RootNamespace>
-    <AssemblyName>SharpPlayer.UI</AssemblyName>
+    <RootNamespace>SharpVisualiser.UI</RootNamespace>
+    <AssemblyName>SharpVisualiser.UI</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

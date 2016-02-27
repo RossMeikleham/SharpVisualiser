@@ -6,10 +6,10 @@ using System.Numerics;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-using SharpPlayer.MediaProcessing.SignalProcessing;
+using SharpVisualiser.MediaProcessing.SignalProcessing;
 
 // Tests For Fast Fourier Transform
-namespace SharpPlayerTests {
+namespace SharpVisualiserTests.MediaProcessing.SignalProcessing {
 
     [TestClass]
     public class FFTTest {

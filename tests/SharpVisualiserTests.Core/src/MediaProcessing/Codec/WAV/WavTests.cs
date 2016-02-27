@@ -3,12 +3,12 @@ using System.IO;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-using SharpPlayer.MediaProcessing.Codecs;
-using SharpPlayer.MediaProcessing;
+using SharpVisualiser.MediaProcessing.Codecs;
+using SharpVisualiser.MediaProcessing;
 
 
 // Test Wav Data 
-namespace WavTests {
+namespace SharpVisualiserTests.MediaProcessing.Codecs {
 
     [TestClass]
     public class WavTest {

@@ -4,8 +4,8 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using System.IO;
-using SharpPlayer.MediaProcessing;
-using SharpPlayer.MediaProcessing.Codecs;
+using SharpVisualiser.MediaProcessing;
+using SharpVisualiser.MediaProcessing.Codecs;
 
 
 // Main Visualiser UI

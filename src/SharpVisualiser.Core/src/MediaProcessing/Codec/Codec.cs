@@ -5,10 +5,10 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 
-using SharpPlayer.MediaProcessing.SignalProcessing;
+using SharpVisualiser.MediaProcessing.SignalProcessing;
 
 // Dealing with processing media for visualisations
-namespace SharpPlayer.MediaProcessing {
+namespace SharpVisualiser.MediaProcessing {
 
     // A sample can either be on a single channel (Mono) or Left and Right channels (Stereo)
     public enum NumChannels { Mono = 1, Stereo = 2 };

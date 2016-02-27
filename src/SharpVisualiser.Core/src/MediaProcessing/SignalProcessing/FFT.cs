@@ -4,7 +4,7 @@ using System.Linq;
 using System.Diagnostics;
 
 // Fast Fourier Transform Implementation
-namespace SharpPlayer.MediaProcessing.SignalProcessing {
+namespace SharpVisualiser.MediaProcessing.SignalProcessing {
 
 
     public class FFT {
