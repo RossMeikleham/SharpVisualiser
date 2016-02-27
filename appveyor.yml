@@ -10,8 +10,8 @@ environment:
           CONFIG: "Release"
 
 build_script:
-    - MSBuild SharpVisualiser.sln /p:Configuration=%CONFIG% /p:Platform="Any CPU"
+    - MSBuild SharpVisualiser.sln /p:Configuration=%CONFIG% /p:Platform="Any CPU" /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
     - cd tests/SharpVisualiserTests.Core/bin/%CONFIG%
-    - VTest.Console /logger:Appveyor SharpVisualiserTests.dll
+    - vstest.Console /logger:Appveyor SharpVisualiserTests.dll
 
 
