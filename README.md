@@ -14,7 +14,7 @@ visualisation which displays the noise levels in decibels against frequencies.
 ## Windows (Visual Studio 2012+)
 - Open the solution and press the `Start` button in the menu toolbar. (You may have to right click the `SharpVisualiser.UI` Project and select the `Set as StartUp Project` option first.) 
 
-# Linux And OSX (MonoDevelop 4.0+)
+## Linux And OSX (MonoDevelop 4.0+)
 - Open the solution and right click the `SharpVisualiser.UI` project and select `Run Item`
 
 
