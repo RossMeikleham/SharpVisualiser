@@ -11,8 +11,6 @@ environment:
 
 build_script:
     - MSBuild SharpVisualiser.sln /p:Configuration=%CONFIG% /p:Platform="Any CPU"
-
-test:
     - cd tests/SharpVisualiserTests.Core/bin/%CONFIG%
     - VTest.Console /logger:Appveyor SharpVisualiserTests.dll
 
