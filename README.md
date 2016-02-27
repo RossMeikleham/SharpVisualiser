@@ -1,6 +1,8 @@
 # Sharp Visualiser
 Real time music visualiser written in C#
 
+[![Build status](https://ci.appveyor.com/api/projects/status/0ita9pts97w7e95n/branch/master?svg=true)](https://ci.appveyor.com/project/RossMeikleham/sharpvisualiser/branch/master)
+
 ![visual](/images/visual.gif?raw=true)
 
 Uses DSP algorithms such as the Fourier Transform to generate visualisations of the 
