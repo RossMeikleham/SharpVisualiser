@@ -120,6 +120,11 @@ namespace SharpPlayer.UI {
         }
 
         public void drawEqualiserBars(object sender, PaintEventArgs e) {
+
+            if (Data == null) {
+                return;
+            }
+
             int nData = Data.Length;
             int width = Canvas.Width;
             int height = Canvas.Height;
