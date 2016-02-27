@@ -127,7 +127,7 @@ namespace SharpPlayerTests {
             var value = new Complex(3, 4);
             var arr = new Complex[] { value };
 
-            var result = FFT.Normalize(FFT.PerformFFT(arr));
+            var result = FFT.Magnitude(FFT.PerformFFT(arr));
             Assert.AreEqual(5, result[0]);
         }
 

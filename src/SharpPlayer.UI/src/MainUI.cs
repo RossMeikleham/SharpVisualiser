@@ -1,34 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
-using System.Numerics;
-using System.Diagnostics;
-
+using SharpPlayer.MediaProcessing;
 using SharpPlayer.MediaProcessing.Codecs;
-using SharpPlayer.MediaProcessing.SignalProcessing;
 
+
+// Main Visualiser UI
 
 namespace SharpPlayer.UI {
     public partial class SharpVisualiser : Form {
 
-        private bool soundLoaded;
-        private VisualiserState VState;
+        private bool soundLoaded; 
+        private VisualiserState VState; 
+        private Codec codec; // Currently Loaded Media File
 
         public SharpVisualiser() {
+
             InitializeComponent();
             soundLoaded = false;
             VState = new VisualiserState(visualiserCanvas);
         }
 
+
         // "Open" Button Pressed, attempt to select a music file
         private void openToolStripMenuItem_Click(object sender, EventArgs e) {
+
             OpenFileDialog openFileDialog = new OpenFileDialog();
 
             if (openFileDialog.ShowDialog() == DialogResult.OK) {
@@ -43,15 +42,12 @@ namespace SharpPlayer.UI {
                     return;
                 }
 
-                // Test
-                double[] buffer = FFT.Normalize(FFT.PerformFFT(
-                            wav.SampleData.Take(8192)
-                               .Select(sample => new Complex(sample, 0))
-                               .ToArray()));
+                codec = wav;
 
-                soundLoaded = true;
-                VState.drawVisualiserData(buffer);
-
+                // Enable Media Control Buttons
+                playToolStripMenuItem.Enabled = true;
+                resetToolStripMenuItem.Enabled  = true;
+                soundLoaded = true;         
             }
         }
 
@@ -60,30 +56,58 @@ namespace SharpPlayer.UI {
             Application.Exit();
         }
 
-
+        // Paint event, send details to the Visualiser to update the screen
         private void visualiserCanvas_Paint(object sender, PaintEventArgs e) {
             if (soundLoaded) {
-                VState.drawEquiliserBars(sender, e);
+                VState.drawEqualiserBars(sender, e);
             }
         }
 
+        // Redraw the Visualiser to scale if the screen is resized
         private void visualiserCanvas_Resize(object sender, EventArgs e) {
             if (soundLoaded) {
-                Debug.WriteLine("Resizing");
                 visualiserCanvas.Invalidate();
             }
         }
 
+        // Starts playing the loaded media file
+        private void playToolStripMenuItem_Click(object sender, EventArgs e) {
+            
+            // Give a delegate callback to the player for passing sample data to our visualiser 
+            if (codec.Play(VState.drawVisualiserData)) { 
+                playToolStripMenuItem.Enabled = false; // Can't play if we're already playing
+                pauseToolStripMenuItem.Enabled = true; // Allow for pausing in the middle of playing
+                
+            } else {
+                MessageBox.Show("Music Already Playing", "Playing Music", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        // Pauses a currently playing media file
+        private void pauseToolStripMenuItem_Click(object sender, EventArgs e) {
+            codec.Pause();
+            playToolStripMenuItem.Enabled = true; // If we're paused, allow us the option to start playing again
+            pauseToolStripMenuItem.Enabled = false; // Can't pause if we're already paused
+        }
+
+        // Resets a currently playing media file to the beginning of the track 
+        private void resetToolStripMenuItem_Click(object sender, EventArgs e) {
+            codec.Reset();
+            playToolStripMenuItem.Enabled = true; // If reset, allow for starting to play again 
+            pauseToolStripMenuItem.Enabled = false; // Not currently playing so pausing makes no sense
+        }
     }
 
 
+
+    // Stores the state of the Visualiser for drawing graphics on screen
     public class VisualiserState {
-        public const int pixelSpace = 10; // Space between bars
-        public const int barPixelWidth = 20;
-        public readonly double maxMagnitude = 20 * Math.Log10(short.MaxValue);
+        public const int pixelSpace = 5; // Space between bars
+        public const int barPixelWidth = 15; // Width of bars
+        public readonly double maxMagnitude = 20 * Math.Log10(short.MaxValue); // Max magnitude in decibels ~90db
 
         private PictureBox Canvas;
-        private double[] Data;
+        private double[] Data; // Processed sample data to visualise
 
 
         public VisualiserState(PictureBox canvas) {
@@ -95,7 +119,7 @@ namespace SharpPlayer.UI {
             Canvas.Invalidate();
         }
 
-        public void drawEquiliserBars(object sender, PaintEventArgs e) {
+        public void drawEqualiserBars(object sender, PaintEventArgs e) {
             int nData = Data.Length;
             int width = Canvas.Width;
             int height = Canvas.Height;
@@ -128,10 +152,14 @@ namespace SharpPlayer.UI {
                     avg += Data[i + j];
                 }
                 avg /= groupN;
-
+              
                 // Draw The Bar
                 Brush color = Brushes.Aquamarine;
                 double barHeight = (20 * Math.Log10(avg) * height) / maxMagnitude;
+                if (barHeight < 1.0) {
+                    barHeight = 1.0;
+                } 
+                
                 RectangleF rect = new RectangleF(curX, height - (float)barHeight, barPixelWidth, (float)barHeight);
                 graphics.FillRectangle(color, rect);
 

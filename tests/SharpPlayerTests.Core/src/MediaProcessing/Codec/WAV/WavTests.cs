@@ -1,16 +1,9 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Numerics;
+using System.IO;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using SharpPlayer.MediaProcessing.Codecs;
-using SharpPlayer.MediaProcessing.SignalProcessing;
-
-using System.Diagnostics;
-using System.IO;
 using SharpPlayer.MediaProcessing;
 
 
@@ -55,34 +48,15 @@ namespace WavTests {
             }
         }
 
+
         [TestMethod]
         public void TestLoadFile() {
             var exampleDir = Directory.GetParent(Directory.GetCurrentDirectory())
                                         .Parent.Parent.Parent.FullName + "/examples/";
 
             string wavFilePath = exampleDir + "8k16bitpcm.wav";
-            Wav wav = new Wav(File.ReadAllBytes(wavFilePath).ToList());
+            Wav wav = new Wav(File.ReadAllBytes(wavFilePath).ToList());  
+       }
 
-            Debug.WriteLine("Channels:{0}", wav.NChannels);
-            Debug.WriteLine("SampleRate:{0}Hz", wav.SampleRate);
-            Debug.WriteLine("LengthSamples{0}", wav.SampleData.Count());
-
-            int bufferSize = 8192;
-            double[] buffer;
-
-            for (int i = 0; i < wav.SampleData.Count(); i+= bufferSize) {
-                if (i + bufferSize > wav.SampleData.Count()) {
-                    break;
-                }
-                buffer = FFT.Normalize(FFT.PerformFFT(
-                            wav.SampleData.Skip(i)
-                               .Take(bufferSize)
-                               .Select(sample => new Complex(sample, 0))
-                               .ToArray()));
-
-                Debug.WriteLine(buffer[0]);
-            }
-
-        }
     }
 }

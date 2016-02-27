@@ -16,10 +16,6 @@ namespace SharpPlayer.MediaProcessing.Codecs {
 
     public class Wav : Codec {
 
-        public NumChannels NChannels { get; }
-        public uint SampleRate { get; }
-        public List<short> SampleData { get; }
-
         public const int RiffChunkSize = 12; // Size of Riff Chunk In Bytes
         public readonly uint ChunkSize;
 
@@ -34,6 +30,7 @@ namespace SharpPlayer.MediaProcessing.Codecs {
       
 
             SampleData = ReadDataChunk(data);
+            SampleData.Count();
         }
 
 
@@ -67,11 +64,17 @@ namespace SharpPlayer.MediaProcessing.Codecs {
 
         public static List<short> ReadDataChunk(List<byte> lData) {
 
-            var data = lData.Take(8).ToArray(); 
+            var data = lData.ToArray();
+
+            // Could be a "List" Chunk prepending
+            if (EndianHelper.ToUInt32BE(data, 0) == 0x4C495354) {
+                data = data.Skip(78).ToArray();
+                lData.RemoveRange(0, 78);
+            }
 
             // Chunk ID should contain the letters "data" in Big Endian format
             if (EndianHelper.ToUInt32BE(data, 0) != 0x64617461) {
-                throw new Exception("Unable to read Data Chunk");
+                throw new Exception("Unable to read Data Chunk, incorrect ID");
             }
 
             // Number of bytes containing pure sample data 
@@ -80,6 +83,7 @@ namespace SharpPlayer.MediaProcessing.Codecs {
             /* Check data size is a multiple of 2, as samples are 16bits each. Also
              * check there's enough bytes left in the buffer to extract the sample data */
             if ((dataSize & 0x1) != 0x0 || dataSize > int.MaxValue || dataSize > lData.Count() - 8) {
+                Debug.WriteLine((dataSize & 0x1) + " " + dataSize + " " + lData.Count());
                 throw new Exception("Unable to read Data Chunk");
             }
 
@@ -87,8 +91,9 @@ namespace SharpPlayer.MediaProcessing.Codecs {
             lData.RemoveRange(0, 8);
 
             for (int i = 0; i < dataSize; i += 2) {
-                sampleData.Add(EndianHelper.ToInt16LE(lData.Take(2).ToArray(), 0));
-                lData.RemoveRange(0, 2);
+                sampleData.Add(BitConverter.IsLittleEndian ? 
+                    (short)(lData[i] | lData[i + 1] << 8) : 
+                    (short)(lData[i + 1] | lData[i] << 8)); 
             }
 
             return sampleData;

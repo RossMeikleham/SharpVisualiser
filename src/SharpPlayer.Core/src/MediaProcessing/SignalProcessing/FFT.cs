@@ -1,5 +1,6 @@
 using System;
 using System.Numerics;
+using System.Linq;
 using System.Diagnostics;
 
 // Fast Fourier Transform Implementation
@@ -7,6 +8,15 @@ namespace SharpPlayer.MediaProcessing.SignalProcessing {
 
 
     public class FFT {
+
+         public static double[] Magnitude(Complex[] data) {
+            return data.Take((data.Length/ 2) + 1).Select(x => Complex.Abs(x)/data.Length).ToArray();
+        }
+
+        // Normalizes short between -1 and 1
+        public static double Normalize(short s) {
+            return (((s + short.MaxValue + 1.0) * 2) / ushort.MaxValue) - 1;
+        }
 
         /* Uses Cooley–Tukey algorithm with radix-2 DIT case
          * assumes no of points are a power of 2 */
@@ -77,15 +87,7 @@ namespace SharpPlayer.MediaProcessing.SignalProcessing {
         }
 
         
-        public static double[] Normalize(Complex[] data) {
-            var result = new double[data.Length];
-
-            for (int i = 0; i < data.Length; i++) {
-                result[i] = Complex.Abs(data[i]) / data.Length;
-            }
-
-            return result; 
-       }
+       
     }
 
 }
